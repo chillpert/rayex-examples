@@ -8,17 +8,16 @@ project("Rayex-Examples" VERSION 1.0.0)
 # |--- rayex-examples
 set(PATH_TO_RAYEX ${PROJECT_SOURCE_DIR}/../rayex)
 
-# rayex-examples
-add_executable(example ${PROJECT_SOURCE_DIR}/main.cpp ${FILES_EXAMPLE})
-
-# Paths to libs
-target_link_directories(example PUBLIC
-  ${PATH_TO_RAYEX}/build # path to library
-  ${PATH_TO_RAYEX}/include/external/libs # external libs (for SDL and KTX)
-)
-
 # Include all necessary rayex headers
 include(${PATH_TO_RAYEX}/include/CMakeLists.txt)
+
+# rayex-examples
+add_executable(example ${PROJECT_SOURCE_DIR}/main.cpp)
+
+# Paths to libs
+target_link_directories(example PRIVATE
+  ${RAYEX_LINK_DIRECTORIES}
+)
 
 # Include directories for example
 target_include_directories(example PRIVATE
@@ -27,12 +26,10 @@ target_include_directories(example PRIVATE
 
 # Link all necessary libs
 target_link_libraries(example
-  librayex.so
-  SDL2main
-  SDL2
+  ${RAYEX_LIBRARIES}
 )
 
-# rayex requires C++20
+# Rayex requires C++20
 set_target_properties(example PROPERTIES
   CXX_STANDARD 20
 )
