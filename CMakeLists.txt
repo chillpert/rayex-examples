@@ -12,21 +12,28 @@ set(PATH_TO_RAYEX ${PROJECT_SOURCE_DIR}/../rayex)
 include(${PATH_TO_RAYEX}/include/CMakeLists.txt)
 
 # rayex-examples
-add_executable(example ${PROJECT_SOURCE_DIR}/main.cpp)
+add_executable(example ${PROJECT_SOURCE_DIR}/main.cpp ${IMGUI_SOURCES})
 
 # Paths to libs
 target_link_directories(example PRIVATE
-  ${RAYEX_LINK_DIRECTORIES}
+  ${RAYEX_EXTERNAL_LINK_DIRS}
+
+  $<$<STREQUAL:${CMAKE_SYSTEM_NAME},Linux>:${PATH_TO_RAYEX}/build>
+  # TODO: do not hard-code, fix output under Windows to unify
+  $<$<STREQUAL:${CMAKE_SYSTEM_NAME},Windows>:${PATH_TO_RAYEX}/build/Debug>
+  
 )
 
 # Include directories for example
 target_include_directories(example PRIVATE
   ${PROJECT_SOURCE_DIR}/include
+  ${RAYEX_INCLUDE_DIRS}
 )
 
 # Link all necessary libs
 target_link_libraries(example
-  ${RAYEX_LIBRARIES}
+  ${RAYEX_LIBRARY}
+  ${RAYEX_EXTERNAL_LIBRARIES}
 )
 
 # Rayex requires C++20
