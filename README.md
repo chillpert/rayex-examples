@@ -1,6 +1,6 @@
 # rayex-examples
 
-This repository contains a collection of example scenes to show how [rayex](https://github.com/chillpert/rayex) can be used in an actual project. It shows almost all features the framework has to offer currently. 
+This repository contains a collection of example scenes to show how [rayex](https://github.com/chillpert/rayex) can be used in an actual project. It contains almost all features the framework has to offer at the moment. 
 
 ![Sponza Model](assets/sponza.png)
 
