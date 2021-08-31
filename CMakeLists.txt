@@ -12,14 +12,14 @@ set(PATH_TO_RAYEX ${PROJECT_SOURCE_DIR}/../rayex)
 include(${PATH_TO_RAYEX}/include/CMakeLists.txt)
 
 # rayex-examples
-add_executable(example ${PROJECT_SOURCE_DIR}/main.cpp ${IMGUI_SOURCES})
+add_executable(example ${PROJECT_SOURCE_DIR}/main.cpp)
 
 # Paths to libs
 target_link_directories(example PRIVATE
   ${RAYEX_EXTERNAL_LINK_DIRS}
 
   $<$<STREQUAL:${CMAKE_SYSTEM_NAME},Linux>:${PATH_TO_RAYEX}/build>
-  # TODO: do not hard-code, fix output under Windows to unify
+  # TODO: do not hard-code, fix output under MSVC to unify
   $<$<STREQUAL:${CMAKE_SYSTEM_NAME},Windows>:${PATH_TO_RAYEX}/build/Debug>
   
 )
