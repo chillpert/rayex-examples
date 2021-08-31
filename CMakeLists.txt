@@ -8,7 +8,15 @@ project("Rayex-Examples" VERSION 1.0.0)
 # |--- rayex-examples
 set(PATH_TO_RAYEX ${PROJECT_SOURCE_DIR}/../rayex)
 
-# Include all necessary rayex headers
+# It is advised to include the CMakeLists.txt inside the 'include' folder that comes 
+# with the pre-built binaries or the rayex repository of course.
+#
+# This file will set the following variables:
+# 
+# RAYEX_INCLUDE_DIRS  - all project headers
+# RAYEX_LIBRARIES     - all libraries (third party + rayex itself)
+# RAYEX_LINK_DIRS     - all directories of the above libraries 
+
 include(${PATH_TO_RAYEX}/include/CMakeLists.txt)
 
 # rayex-examples
@@ -16,12 +24,7 @@ add_executable(example ${PROJECT_SOURCE_DIR}/main.cpp)
 
 # Paths to libs
 target_link_directories(example PRIVATE
-  ${RAYEX_EXTERNAL_LINK_DIRS}
-
-  $<$<STREQUAL:${CMAKE_SYSTEM_NAME},Linux>:${PATH_TO_RAYEX}/build>
-  # TODO: do not hard-code, fix output under MSVC to unify
-  $<$<STREQUAL:${CMAKE_SYSTEM_NAME},Windows>:${PATH_TO_RAYEX}/build/Debug>
-  
+  ${RAYEX_LINK_DIRS}  
 )
 
 # Include directories for example
@@ -32,8 +35,7 @@ target_include_directories(example PRIVATE
 
 # Link all necessary libs
 target_link_libraries(example
-  ${RAYEX_LIBRARY}
-  ${RAYEX_EXTERNAL_LIBRARIES}
+  ${RAYEX_LIBRARIES}
 )
 
 # Rayex requires C++20
